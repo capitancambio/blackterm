@@ -13,7 +13,17 @@ Process a subset of markdown elements and prints them with flying colours!
 */
 func Markdown(input []byte) []byte {
 	tr := NewTerminalRenderer()
-	return blackfriday.Markdown(input, tr, blackfriday.EXTENSION_STRIKETHROUGH)
+	ret := blackfriday.Markdown(input, tr, blackfriday.EXTENSION_STRIKETHROUGH)
+	//get rid of \n at the end of the text
+	for len(ret) > 0 && ret[len(ret)-1] == '\n' {
+		ret = ret[:len(ret)-1]
+	}
+	return ret
+}
+
+func MarkdownString(input string) string {
+	tr := NewTerminalRenderer()
+	return string(blackfriday.Markdown([]byte(input), tr, blackfriday.EXTENSION_STRIKETHROUGH))
 }
 
 type TerminalRenderer struct {
