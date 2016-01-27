@@ -22,8 +22,7 @@ func Markdown(input []byte) []byte {
 }
 
 func MarkdownString(input string) string {
-	tr := NewTerminalRenderer()
-	return string(blackfriday.Markdown([]byte(input), tr, blackfriday.EXTENSION_STRIKETHROUGH))
+	return string(Markdown([]byte(input)))
 }
 
 type TerminalRenderer struct {
